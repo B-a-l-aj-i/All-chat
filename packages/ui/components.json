@@ -1,0 +1,24 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "base-lyra",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/styles/globals.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "iconLibrary": "lucide",
+  "aliases": {
+    "components": "@anonymous-chat/ui/components",
+    "utils": "@anonymous-chat/ui/lib/utils",
+    "hooks": "@anonymous-chat/ui/hooks",
+    "lib": "@anonymous-chat/ui/lib",
+    "ui": "@anonymous-chat/ui/components"
+  },
+  "menuColor": "default",
+  "menuAccent": "subtle",
+  "registries": {}
+}
