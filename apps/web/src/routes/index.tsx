@@ -9,7 +9,7 @@ function HomeComponent() {
     <main className="relative flex h-full flex-col items-center overflow-hidden bg-background px-6">
       <div className="flex w-full max-w-4xl flex-1 flex-col items-center justify-center pb-24 text-center">
         <h1 className="text-4xl font-bold leading-[1.08] tracking-tight text-foreground sm:text-5xl md:text-5xl">
-          <span className="whitespace-nowrap">All Chat System for</span>
+          <span className="whitespace-nowrap">Anonymous Chat System for</span>
           <br />
           <div className="relative h-8 my-3">
             <span className="absolute inset-0 text-emerald-500 opacity-0 animate-[rotateWords_3s_linear_infinite]">
