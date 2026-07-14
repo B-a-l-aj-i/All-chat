@@ -12,8 +12,8 @@
   "dependencies": {
     "@ai-sdk/devtools": "^1.0.1",
     "@ai-sdk/google": "^4.0.7",
-    "@anonymous-chat/db": "workspace:*",
-    "@anonymous-chat/env": "workspace:*",
+    "@all-chat/db": "workspace:*",
+    "@all-chat/env": "workspace:*",
     "ai": "catalog:",
     "cors": "^2.8.6",
     "dotenv": "catalog:",
@@ -21,7 +21,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@anonymous-chat/config": "workspace:*",
+    "@all-chat/config": "workspace:*",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "catalog:",

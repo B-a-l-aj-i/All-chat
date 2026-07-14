@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@anonymous-chat/ui/lib/utils";
+import { cn } from "@all-chat/ui/lib/utils";
 import { Tooltip as TooltipPrimitive } from "@base-ui/react/tooltip";
 
 function TooltipProvider({ delay = 0, ...props }: TooltipPrimitive.Provider.Props) {

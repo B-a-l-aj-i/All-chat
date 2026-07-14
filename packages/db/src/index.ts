@@ -1,4 +1,4 @@
-import { env } from "@anonymous-chat/env/server";
+import { env } from "@all-chat/env/server";
 import { createClient } from "@libsql/client";
 import { drizzle } from "drizzle-orm/libsql";
 

@@ -1,4 +1,4 @@
-# anonymous-chat
+# all-chat
 
 This project was created with [Better-T-Stack](https://github.com/AmanVarshney01/create-better-t-stack), a modern TypeScript stack that combines React, TanStack Router, Express, and more.
 
@@ -69,7 +69,7 @@ npx shadcn@latest add accordion dialog popover sheet table -c packages/ui
 Import shared components like this:
 
 ```tsx
-import { Button } from "@anonymous-chat/ui/components/button";
+import { Button } from "@all-chat/ui/components/button";
 ```
 
 ### Add app-specific blocks
@@ -103,7 +103,7 @@ For more details, see the guide on [Deploying to Vercel](https://www.better-t-st
 ## Project Structure
 
 ```
-anonymous-chat/
+all-chat/
 ├── apps/
 │   ├── web/         # Frontend application (React + TanStack Router)
 │   └── server/      # Backend API (Express)

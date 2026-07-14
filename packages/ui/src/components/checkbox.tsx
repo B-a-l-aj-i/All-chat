@@ -1,6 +1,6 @@
 "use client";
 
-import { cn } from "@anonymous-chat/ui/lib/utils";
+import { cn } from "@all-chat/ui/lib/utils";
 import { Checkbox as CheckboxPrimitive } from "@base-ui/react/checkbox";
 import { CheckIcon } from "lucide-react";
 

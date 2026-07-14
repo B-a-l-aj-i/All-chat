@@ -1,9 +1,9 @@
 "use client";
 
-import { Button } from "@anonymous-chat/ui/components/button";
-import { Input } from "@anonymous-chat/ui/components/input";
-import { Textarea } from "@anonymous-chat/ui/components/textarea";
-import { cn } from "@anonymous-chat/ui/lib/utils";
+import { Button } from "@all-chat/ui/components/button";
+import { Input } from "@all-chat/ui/components/input";
+import { Textarea } from "@all-chat/ui/components/textarea";
+import { cn } from "@all-chat/ui/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 

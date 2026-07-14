@@ -1,5 +1,5 @@
 {
-  "name": "anonymous-chat",
+  "name": "all-chat",
   "private": true,
   "workspaces": [
     "apps/*",
@@ -17,11 +17,11 @@
     "hooks:setup": "vp config",
     "dev:web": "vp run --filter web dev",
     "dev:server": "vp run --filter server dev",
-    "db:push": "vp run --filter @anonymous-chat/db db:push",
-    "db:studio": "vp run --filter @anonymous-chat/db db:studio",
-    "db:generate": "vp run --filter @anonymous-chat/db db:generate",
-    "db:migrate": "vp run --filter @anonymous-chat/db db:migrate",
-    "db:local": "vp run --filter @anonymous-chat/db db:local",
+    "db:push": "vp run --filter @all-chat/db db:push",
+    "db:studio": "vp run --filter @all-chat/db db:studio",
+    "db:generate": "vp run --filter @all-chat/db db:generate",
+    "db:migrate": "vp run --filter @all-chat/db db:migrate",
+    "db:local": "vp run --filter @all-chat/db db:local",
     "deploy:setup": "vercel link",
     "dev:vercel": "vercel dev -L",
     "env:preview": "tsx scripts/sync-vercel-env.ts preview",
@@ -31,12 +31,12 @@
     "deploy:check": "vercel deploy --dry"
   },
   "dependencies": {
-    "@anonymous-chat/env": "workspace:*",
+    "@all-chat/env": "workspace:*",
     "dotenv": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@anonymous-chat/config": "workspace:*",
+    "@all-chat/config": "workspace:*",
     "@types/node": "catalog:",
     "oxfmt": "^0.57.0",
     "oxlint": "^1.72.0",

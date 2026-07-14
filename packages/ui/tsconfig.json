@@ -1,11 +1,11 @@
 {
-  "extends": "@anonymous-chat/config/tsconfig.base.json",
+  "extends": "@all-chat/config/tsconfig.base.json",
   "compilerOptions": {
     "jsx": "react-jsx",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "types": [],
     "paths": {
-      "@anonymous-chat/ui/*": ["./src/*"]
+      "@all-chat/ui/*": ["./src/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],

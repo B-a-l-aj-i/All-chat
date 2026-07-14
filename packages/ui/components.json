@@ -12,11 +12,11 @@
   },
   "iconLibrary": "lucide",
   "aliases": {
-    "components": "@anonymous-chat/ui/components",
-    "utils": "@anonymous-chat/ui/lib/utils",
-    "hooks": "@anonymous-chat/ui/hooks",
-    "lib": "@anonymous-chat/ui/lib",
-    "ui": "@anonymous-chat/ui/components"
+    "components": "@all-chat/ui/components",
+    "utils": "@all-chat/ui/lib/utils",
+    "hooks": "@all-chat/ui/hooks",
+    "lib": "@all-chat/ui/lib",
+    "ui": "@all-chat/ui/components"
   },
   "menuColor": "default",
   "menuAccent": "subtle",

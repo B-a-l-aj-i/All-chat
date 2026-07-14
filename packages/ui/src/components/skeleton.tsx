@@ -1,4 +1,4 @@
-import { cn } from "@anonymous-chat/ui/lib/utils";
+import { cn } from "@all-chat/ui/lib/utils";
 
 function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
   return (

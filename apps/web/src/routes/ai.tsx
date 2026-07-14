@@ -1,25 +1,25 @@
 import { useChat } from "@ai-sdk/react";
-import { env } from "@anonymous-chat/env/web";
-import { Bubble, BubbleContent } from "@anonymous-chat/ui/components/bubble";
-import { Button } from "@anonymous-chat/ui/components/button";
+import { env } from "@all-chat/env/web";
+import { Bubble, BubbleContent } from "@all-chat/ui/components/bubble";
+import { Button } from "@all-chat/ui/components/button";
 import {
   Empty,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
-} from "@anonymous-chat/ui/components/empty";
+} from "@all-chat/ui/components/empty";
 import {
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
   InputGroupTextarea,
-} from "@anonymous-chat/ui/components/input-group";
+} from "@all-chat/ui/components/input-group";
 import {
   Message,
   MessageContent as MessageBody,
   MessageHeader,
-} from "@anonymous-chat/ui/components/message";
+} from "@all-chat/ui/components/message";
 import {
   MessageScroller,
   MessageScrollerButton,
@@ -27,8 +27,8 @@ import {
   MessageScrollerItem,
   MessageScrollerProvider,
   MessageScrollerViewport,
-} from "@anonymous-chat/ui/components/message-scroller";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@anonymous-chat/ui/components/tooltip";
+} from "@all-chat/ui/components/message-scroller";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@all-chat/ui/components/tooltip";
 import { createFileRoute } from "@tanstack/react-router";
 import { DefaultChatTransport } from "ai";
 import { ArrowUpIcon, Loader2, MessageCircleDashedIcon, RotateCwIcon } from "lucide-react";
@@ -105,7 +105,7 @@ function RouteComponent() {
                 <EmptyMedia variant="icon">
                   <MessageCircleDashedIcon />
                 </EmptyMedia>
-                <EmptyTitle>Morning, anonymous-chat!</EmptyTitle>
+                <EmptyTitle>Morning, all-chat!</EmptyTitle>
                 <EmptyDescription>What are we working on today?</EmptyDescription>
               </EmptyHeader>
             </Empty>

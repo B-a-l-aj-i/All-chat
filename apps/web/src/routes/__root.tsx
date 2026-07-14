@@ -1,4 +1,4 @@
-import { Toaster } from "@anonymous-chat/ui/components/sonner";
+import { Toaster } from "@all-chat/ui/components/sonner";
 import { HeadContent, Outlet, createRootRouteWithContext } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
@@ -14,11 +14,11 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
   head: () => ({
     meta: [
       {
-        title: "anonymous-chat",
+        title: "all-chat",
       },
       {
         name: "description",
-        content: "anonymous-chat is a web application",
+        content: "all-chat is a web application",
       },
     ],
     links: [

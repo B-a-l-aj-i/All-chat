@@ -1,5 +1,5 @@
 {
-  "name": "@anonymous-chat/env",
+  "name": "@all-chat/env",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -13,7 +13,7 @@
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@anonymous-chat/config": "workspace:*",
+    "@all-chat/config": "workspace:*",
     "@types/node": "catalog:",
     "typescript": "catalog:"
   }

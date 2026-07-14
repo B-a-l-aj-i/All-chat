@@ -1,4 +1,4 @@
-import { cn } from "@anonymous-chat/ui/lib/utils";
+import { cn } from "@all-chat/ui/lib/utils";
 import { cva, type VariantProps } from "class-variance-authority";
 
 function Empty({ className, ...props }: React.ComponentProps<"div">) {

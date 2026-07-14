@@ -1,4 +1,4 @@
-import { cn } from "@anonymous-chat/ui/lib/utils";
+import { cn } from "@all-chat/ui/lib/utils";
 import { Input as InputPrimitive } from "@base-ui/react/input";
 import * as React from "react";
 

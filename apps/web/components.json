@@ -13,8 +13,8 @@
   "iconLibrary": "lucide",
   "aliases": {
     "components": "@/components",
-    "utils": "@anonymous-chat/ui/lib/utils",
-    "ui": "@anonymous-chat/ui/components",
+    "utils": "@all-chat/ui/lib/utils",
+    "ui": "@all-chat/ui/components",
     "lib": "@/lib",
     "hooks": "@/hooks"
   },

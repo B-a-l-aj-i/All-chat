@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@anonymous-chat/ui/components/button";
-import { cn } from "@anonymous-chat/ui/lib/utils";
+import { Button } from "@all-chat/ui/components/button";
+import { cn } from "@all-chat/ui/lib/utils";
 import {
   MessageScroller as MessageScrollerPrimitive,
   useMessageScroller,

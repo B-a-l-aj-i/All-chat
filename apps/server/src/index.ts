@@ -1,6 +1,6 @@
 import { devToolsMiddleware } from "@ai-sdk/devtools";
 import { google } from "@ai-sdk/google";
-import { env } from "@anonymous-chat/env/server";
+import { env } from "@all-chat/env/server";
 import {
   pipeUIMessageStreamToResponse,
   streamText,

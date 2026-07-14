@@ -1,10 +1,10 @@
-import { Button } from "@anonymous-chat/ui/components/button";
+import { Button } from "@all-chat/ui/components/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@anonymous-chat/ui/components/dropdown-menu";
+} from "@all-chat/ui/components/dropdown-menu";
 import { Moon, Sun } from "lucide-react";
 
 import { useTheme } from "@/components/theme-provider";
