@@ -128,3 +128,22 @@
     @apply font-sans;
   }
 }
+
+@keyframes rotateWords {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  10%,
+  30% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  40% {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}

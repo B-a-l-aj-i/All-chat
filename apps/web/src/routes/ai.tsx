@@ -74,8 +74,8 @@ function RouteComponent() {
         <header className="shrink-0 border-b px-4 py-3">
           <div className="mx-auto flex w-full max-w-3xl items-center justify-between gap-3">
             <div className="min-w-0">
-              <h1 className="text-sm font-medium">New Chat</h1>
-              <p className="text-xs/relaxed text-muted-foreground">How can I help you today?</p>
+              <h1 className="text-base font-semibold">New Chat</h1>
+              <p className="text-sm/relaxed text-muted-foreground">How can I help you today?</p>
             </div>
             <div className="shrink-0">
               <Tooltip>
