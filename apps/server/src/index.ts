@@ -10,13 +10,13 @@ import {
   wrapLanguageModel,
 } from "ai";
 import cors from "cors";
-import express, { type Request, type Response } from "express";
+import express from "express";
 
-import { db } from "@all-chat/db";
-import { room } from "@all-chat/db/schema/room";
+
 import { app } from "./app";
 
 import "./user";
+import "./room"
 
 app.use(
   cors({
