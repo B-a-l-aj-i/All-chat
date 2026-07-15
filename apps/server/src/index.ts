@@ -10,9 +10,13 @@ import {
   wrapLanguageModel,
 } from "ai";
 import cors from "cors";
-import express from "express";
+import express, { type Request, type Response } from "express";
 
-const app = express();
+import { db } from "@all-chat/db";
+import { room } from "@all-chat/db/schema/room";
+import { app } from "./app";
+
+import "./user";
 
 app.use(
   cors({
@@ -43,6 +47,7 @@ app.get("/", (_req, res) => {
   res.status(200).send("OK");
 });
 
-app.listen(3000, () => {
-  console.log("Server is running on http://localhost:3000");
+
+app.listen(8000, () => {
+  console.log("Server is running on http://localhost:8000");
 });
