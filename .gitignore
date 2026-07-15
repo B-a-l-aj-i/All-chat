@@ -8,6 +8,10 @@ dist
 build
 *.tsbuildinfo
 
+# Local database
+local.db
+*.db
+
 # Generated files
 apps/web/src/routeTree.gen.ts
 
