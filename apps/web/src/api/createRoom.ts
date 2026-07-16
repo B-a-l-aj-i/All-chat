@@ -15,9 +15,11 @@ export async function createRoom(data: CreateRoomInput) {
     body: JSON.stringify(data),
   });
 
+  const result = await res.json();
+  
   if (!res.ok) {
-    throw new Error("Failed to create room");
+    throw new Error(result.message);
   }
 
-  return res.json();
+  return result;
 }

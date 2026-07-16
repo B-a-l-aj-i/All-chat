@@ -18,8 +18,7 @@ export default function CreateRoom() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e);
-    
+
     const formData = new FormData(e.currentTarget);
     // console.log(formData.get("room_name"));   // { room_name: "Room r", description: "...", password: "..." }
 
@@ -41,11 +40,15 @@ export default function CreateRoom() {
       />
       <DialogContent className="sm:max-w-sm">
         <form onSubmit={handleSubmit}>
-          <DialogHeader>
+          <DialogHeader className="mb-2">
             <DialogTitle>Create Room</DialogTitle>
             <DialogDescription>
-              Make changes to your profile here. Click save when you&apos;re
-              done.
+              <span className="text-red-700">
+                {createRoom.isError && createRoom.error.message}
+              </span>
+              <span className="text-green-700">
+                {createRoom.isSuccess && "Room Created Successfully"}
+              </span>
             </DialogDescription>
           </DialogHeader>
           <FieldGroup>
@@ -70,9 +73,14 @@ export default function CreateRoom() {
               />
             </Field>
           </FieldGroup>
-          <DialogFooter>
+          <DialogFooter className="mt-4">
             {/* <DialogClose render={<Button className="rounded-md cursor-pointer" variant="outline">Cancel</Button>} /> */}
-            <Button className="rounded-md cursor-pointer" type="submit">
+            <Button
+              disabled={createRoom.isPending}
+              className={"rounded-md cursor-pointer"}
+              type="submit"
+            >
+              {createRoom.isPending && "Creating..."}
               Create
             </Button>
           </DialogFooter>
