@@ -17,11 +17,13 @@
     "ai": "catalog:",
     "cors": "^2.8.6",
     "dotenv": "catalog:",
+    "drizzle-orm": "^0.45.2",
     "express": "^5.2.1",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@all-chat/config": "workspace:*",
+    "@all-chat/db": "workspace:*",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/node": "catalog:",
