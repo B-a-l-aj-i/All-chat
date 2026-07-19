@@ -1,14 +1,43 @@
 import { Button } from "@all-chat/ui/components/button";
 import { createFileRoute } from "@tanstack/react-router";
-import { API_URL } from "../../src/constant";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useState } from "react";
 import CreateRoom from "@/components/CreateRoom";
+import JoinRoom from "@/components/JoinRoom";
+import RoomChat from "@/components/RoomChat";
+import { socket } from "@/lib/socket";
 
 export const Route = createFileRoute("/")({
   component: HomeComponent,
 });
 
 function HomeComponent() {
+  const [roomId, setRoomId] = useState<string | null>(null);
+
+  if (roomId) {
+    return (
+      <main className="relative flex h-full flex-col items-center bg-background px-6 py-10">
+        <div className="flex w-full max-w-2xl flex-1 flex-col gap-4">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-semibold text-foreground">
+              Room: {roomId}
+            </h2>
+            <Button
+              variant="outline"
+              className="rounded-md cursor-pointer"
+              onClick={() => {
+                socket.emit("leave-room", roomId);
+                setRoomId(null);
+              }}
+            >
+              Leave
+            </Button>
+          </div>
+          {roomId}
+          <RoomChat roomId={roomId} />
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="relative flex h-full flex-col items-center overflow-hidden bg-background px-6">
@@ -38,9 +67,10 @@ function HomeComponent() {
 
         <div className="mt-5 flex items-center gap-3">
           <CreateRoom />
-          <Button variant="ghost" className="rounded-3xl p-4 cursor-pointer">
+          {/* <Button variant="ghost" className="rounded-3xl p-4 cursor-pointer">
             Join Room
-          </Button>
+          </Button> */}
+          <JoinRoom onJoined={setRoomId} />
         </div>
       </div>
     </main>
