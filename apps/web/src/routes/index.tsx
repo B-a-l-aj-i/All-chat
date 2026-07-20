@@ -1,9 +1,8 @@
-import { Button } from "@all-chat/ui/components/button";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import ChatRoom from "@/components/ChatRoom";
 import CreateRoom from "@/components/CreateRoom";
 import JoinRoom from "@/components/JoinRoom";
-import RoomChat from "@/components/RoomChat";
 import { socket } from "@/lib/socket";
 
 export const Route = createFileRoute("/")({
@@ -15,27 +14,13 @@ function HomeComponent() {
 
   if (roomId) {
     return (
-      <main className="relative flex h-full flex-col items-center bg-background px-6 py-10">
-        <div className="flex w-full max-w-2xl flex-1 flex-col gap-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-foreground">
-              Room: {roomId}
-            </h2>
-            <Button
-              variant="outline"
-              className="rounded-md cursor-pointer"
-              onClick={() => {
-                socket.emit("leave-room", roomId);
-                setRoomId(null);
-              }}
-            >
-              Leave
-            </Button>
-          </div>
-          {roomId}
-          <RoomChat roomId={roomId} />
-        </div>
-      </main>
+      <ChatRoom
+        roomId={roomId}
+        onLeave={() => {
+          socket.emit("leave-room", roomId);
+          setRoomId(null);
+        }}
+      />
     );
   }
 

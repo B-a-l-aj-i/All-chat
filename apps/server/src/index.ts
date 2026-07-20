@@ -62,34 +62,29 @@ const io = new Server(httpServer, {
 });
 
 io.on("connection", (socket) => {
-
-  console.log("sfsf",socket.id);
-  
-  // 1) join a room
+  // 1) join a room (keyed by room name so it matches what the client sends)
   socket.on("join-room", async (room_name) => {
     const requestedRoom = await db
       .select()
       .from(room)
       .where(eq(room.room_name, room_name));
 
-    console.log(requestedRoom);
-    const roomId = requestedRoom?.[0]?.id;
-
-    console.log(roomId);
-    
-    if (!roomId) {
-      console.log("Adadasd");
-      
-      socket._error("room does not exist");
+    if (!requestedRoom?.[0]) {
+      socket.emit("room-error", "room does not exist");
+      return;
     }
 
-    socket.join(roomId);
-    console.log(`${socket.id} joined ${roomId}`);
+    socket.join(room_name);
+    socket.emit("joined-room", room_name);
+    console.log(`${socket.id} joined ${room_name}`);
   });
 
-  // 2) send text to everyone in that room
+  // 2) send text to the other members of that room
   socket.on("message", ({ roomId, text }) => {
-    io.to(roomId).emit("message", text); // fan out to all members of roomId
+    if (!roomId || !text) return;
+    // socket.to(...) excludes the sender; the sender adds its own message
+    // optimistically on the client, so this avoids a duplicate echo.
+    socket.to(roomId).emit("message", { text, at: Date.now() });
   });
 });
 

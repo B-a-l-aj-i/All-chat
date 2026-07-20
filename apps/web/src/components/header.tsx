@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 
 import { Logo } from "./logo";
+import { Button } from "@all-chat/ui/components/button";
 
 const NAV_LINKS = [
   { label: "Product", href: "#product" },
@@ -16,35 +17,33 @@ export default function Header() {
         {/* Brand */}
         <Link to="/" className="flex items-center gap-2.5">
           <Logo className="size-7 text-foreground" />
-          <span className="text-xl font-bold tracking-tight text-foreground">All Chat</span>
+          <span className="text-xl  tracking-tight text-foreground">
+            all chat
+          </span>
         </Link>
 
         {/* Primary nav */}
         <nav className="hidden items-center gap-9 md:flex">
           {NAV_LINKS.map(({ label, href }) => (
-            <a
-              key={label}
-              href={href}
-              className="text-[16px] font-medium text-foreground/80 transition-colors hover:text-foreground hover:bg-gray-50 p-2 rounded-2xl"
-            >
-              {label}
+            <a key={label} href={href}>
+              <Button className="rounded-2xl cursor-pointer" variant="ghost">
+                {label}
+              </Button>
             </a>
           ))}
         </nav>
 
         {/* Account actions */}
-        <div className="text-[16px] flex items-center gap-5">
-          <a
-            href="#login"
-            className="hidden text-sm font-medium text-foreground/80 transition-colors hover:text-foreground sm:inline"
-          >
-            Log In
+        <div className="text-[14px] flex items-center gap-2">
+          <a href="#login">
+            <Button variant="default" className="rounded-2xl cursor-pointer">
+              Log In
+            </Button>
           </a>
-          <a
-            href="#signup"
-            className="inline-flex h-10 items-center justify-center rounded-full bg-foreground px-5 text-sm font-medium text-background transition-opacity hover:opacity-90"
-          >
-            Sign Up
+          <a href="#signup">
+            <Button variant="ghost" className="rounded-2xl cursor-pointer">
+              Sign Up
+            </Button>
           </a>
         </div>
       </div>
