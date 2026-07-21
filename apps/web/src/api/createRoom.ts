@@ -4,6 +4,7 @@ export interface CreateRoomInput {
   room_name: string;
   description: string;
   password: string;
+  owner_id: string;
 }
 
 export async function createRoom(data: CreateRoomInput) {
@@ -16,7 +17,7 @@ export async function createRoom(data: CreateRoomInput) {
   });
 
   const result = await res.json();
-  
+
   if (!res.ok) {
     throw new Error(result.message);
   }

@@ -12,11 +12,13 @@ import {
 import { Field, FieldGroup } from "@all-chat/ui/components/field";
 import { Input } from "@all-chat/ui/components/input";
 import { Label } from "@all-chat/ui/components/label";
+import { USER_ID } from "../constant";
 
 export default function CreateRoom() {
   const createRoom = useCreateRoom();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
@@ -26,6 +28,7 @@ export default function CreateRoom() {
       room_name: formData.get("room_name") as string,
       description: formData.get("description") as string,
       password: formData.get("password") as string,
+      owner_id: USER_ID as string,
     });
   };
 

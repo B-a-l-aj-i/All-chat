@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import ChatRoom from "@/components/ChatRoom";
+import ChatRoom from "@/components/chat-room";
 import CreateRoom from "@/components/CreateRoom";
 import JoinRoom from "@/components/JoinRoom";
 import { socket } from "@/lib/socket";

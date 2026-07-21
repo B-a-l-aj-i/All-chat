@@ -8,7 +8,7 @@ export function useCreateRoom() {
     mutationFn: createRoom,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["rooms"],
+        queryKey: ["my-rooms"],
       });
     },
   });
