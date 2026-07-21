@@ -12,19 +12,35 @@ import { Field, FieldGroup } from "@all-chat/ui/components/field";
 import { Input } from "@all-chat/ui/components/input";
 import { Label } from "@all-chat/ui/components/label";
 import { socket } from "../lib/socket";
+import { useJoinRoom } from "@/hooks/useJoinRoom";
+import { USER_ID } from "@/constant";
 
 export default function JoinRoom({
   onJoined,
 }: {
   onJoined?: (roomId: string) => void;
 }) {
+  const joinRoom = useJoinRoom();
+
+
   const handleJoinRoom = (e: React.FormEvent<HTMLFormElement>) => {
+
+    console.log("asdfasaf");
+    
     e.preventDefault();
     const form = new FormData(e.currentTarget);
-    const roomId = String(form.get("room_name"));
-    if (!roomId) return;
-    socket.emit("join-room", roomId);
-    onJoined?.(roomId);
+    const room_name = String(form.get("room_name"));
+    const password = String(form.get("password"));
+
+    // if (!roomId) return;
+    // socket.emit("join-room", roomId);
+    // onJoined?.(roomId);
+
+    joinRoom.mutate({
+      room_name,
+      password,
+      user_id: USER_ID,
+    });
   };
 
   return (
