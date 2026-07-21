@@ -20,6 +20,7 @@ import { app } from "./app";
 
 import "./user";
 import "./room";
+import "./chat";
 import { db } from "@all-chat/db";
 import { room } from "@all-chat/db/schema/room";
 import { eq } from "drizzle-orm";

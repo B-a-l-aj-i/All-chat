@@ -1,4 +1,4 @@
-import { CirclePlus, Search } from "lucide-react";
+import { CirclePlus, Loader2, Search } from "lucide-react";
 import type { Room } from "@/api/getMyRooms";
 import { SidebarRoom } from "./SidebarRoom";
 import { FONT, bubbleShell } from "./constants";
@@ -49,10 +49,8 @@ export function Sidebar({
         </div>
         <div className="flex-1 min-h-0 pt-3.75 overflow-y-auto">
           {isLoading ? (
-            <div
-              className={`px-[22.5px] py-3.75 ${FONT} text-[#78716C] text-[13.125px]/[18.75px]`}
-            >
-              Loading rooms…
+            <div className="flex items-center justify-center py-10">
+              <Loader2 className="h-6 w-6 animate-spin text-[#78716C]" strokeWidth={2} />
             </div>
           ) : rooms.length === 0 ? (
             <div
