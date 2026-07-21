@@ -29,8 +29,8 @@ pnpm run db:push # apply the schema to the database
 pnpm run dev     # start web + server
 ```
 
-- Web: http://localhost:3001
-- API: http://localhost:3000
+- Web: http://localhost:3000
+- API: http://localhost:8000
 
 ## Tech Stack
 
