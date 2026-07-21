@@ -63,28 +63,45 @@ const io = new Server(httpServer, {
 
 io.on("connection", (socket) => {
   // 1) join a room (keyed by room name so it matches what the client sends)
-  socket.on("join-room", async (room_name) => {
+  socket.on("join-room", async (room_id) => {
     const requestedRoom = await db
       .select()
       .from(room)
-      .where(eq(room.room_name, room_name));
+      .where(eq(room.id, room_id));
 
     if (!requestedRoom?.[0]) {
       socket.emit("room-error", "room does not exist");
       return;
     }
 
-    socket.join(room_name);
-    socket.emit("joined-room", room_name);
-    console.log(`${socket.id} joined ${room_name}`);
+    socket.join(room_id);
+    socket.emit("joined-room", room_id);
+    console.log(`${socket.id} joined ${room_id}`);
+  });
+
+  // 1b) leave a room (client emits this when switching away / unmounting)
+  socket.on("leave-room", (room_id) => {
+    if (!room_id) return;
+    socket.leave(room_id);
+    console.log(`${socket.id} left ${room_id}`);
   });
 
   // 2) send text to the other members of that room
-  socket.on("message", ({ roomId, text }) => {
-    if (!roomId || !text) return;
+  socket.on("message", ({ room_id, text }) => {
+    console.log("AdaidhFIOJFB");
+    console.log(room_id, text);
+
+    if (!room_id || !text) return;
     // socket.to(...) excludes the sender; the sender adds its own message
     // optimistically on the client, so this avoids a duplicate echo.
-    socket.to(roomId).emit("message", { text, at: Date.now() });
+    console.log(text);
+    // const a = socket.join(room_id);
+    // console.log(a);
+
+    socket.to(room_id).emit("message", {
+      text,
+      at: Date.now(),
+    });
   });
 });
 

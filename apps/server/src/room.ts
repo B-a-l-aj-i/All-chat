@@ -33,9 +33,6 @@ app.get("/my-rooms", async (req: Request, res: Response) => {
         ),
       );
 
-      console.log(myRooms);
-      
-
     res.json(myRooms);
   } catch (error) {
     res.status(500).json({ error: "Database fetch failed" });
@@ -77,7 +74,7 @@ app.post("/create-room", async (req: Request, res: Response) => {
 app.post("/join-room", async (req: Request, res: Response) => {
   const { room_name, password, user_id } = req.body;
 
-  console.log(room_name, password, user_id);
+  // console.log(room_name, password, user_id);
 
   if (!room_name || !password || !user_id) {
     return res

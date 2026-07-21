@@ -30,9 +30,21 @@ export default function ChatRoom({ onLeave }: { onLeave?: () => void }) {
     }
   }, [rooms, selectedId]);
 
-  // Reset the conversation when switching rooms.
+  // Join the selected room's socket channel (and reset the conversation).
+  // The cleanup leaves the previous room and removes the listener, so switching
+  // rooms doesn't leak handlers or bleed messages across rooms.
   useEffect(() => {
     setMessages([]);
+    if (!selectedId) return;
+
+    const onJoined = (id: string) => console.log("joined-room", id);
+    socket.on("joined-room", onJoined);
+    socket.emit("join-room", selectedId);
+
+    return () => {
+      socket.emit("leave-room", selectedId);
+      socket.off("joined-room", onJoined);
+    };
   }, [selectedId]);
 
   // Receive messages from other members of the room.
@@ -61,7 +73,7 @@ export default function ChatRoom({ onLeave }: { onLeave?: () => void }) {
   const send = () => {
     const text = draft.trim();
     if (!text || !selectedId) return;
-    socket.emit("message", { roomId: selectedId, text });
+    socket.emit("message", { room_id: selectedId, text });
     setMessages((prev) => [
       ...prev,
       { kind: "text", mine: true, text, time: formatTime(Date.now()) },
