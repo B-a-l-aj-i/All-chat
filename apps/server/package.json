@@ -15,6 +15,7 @@
     "@all-chat/db": "workspace:*",
     "@all-chat/env": "workspace:*",
     "ai": "catalog:",
+    "anonymous-names": "^0.0.10",
     "cors": "^2.8.6",
     "dotenv": "catalog:",
     "drizzle-orm": "^0.45.2",

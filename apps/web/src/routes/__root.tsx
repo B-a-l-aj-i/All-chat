@@ -3,6 +3,7 @@ import {
   HeadContent,
   Outlet,
   createRootRouteWithContext,
+  useLocation,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 
@@ -44,6 +45,8 @@ export const Route = createRootRouteWithContext<RouterAppContext>()({
 const queryClient = new QueryClient();
 
 function RootComponent() {
+  const { pathname } = useLocation();
+  const hideHeader = pathname.startsWith("/my-rooms");
   return (
     <>
       <QueryClientProvider client={queryClient}>
@@ -54,8 +57,8 @@ function RootComponent() {
           disableTransitionOnChange
           storageKey="vite-ui-theme"
         >
-          <div className="grid grid-rows-[auto_1fr] h-svh">
-            <Header />
+          <div className="h-svh">
+            {!hideHeader && <Header />}
             <Outlet />
           </div>
           <Toaster richColors />

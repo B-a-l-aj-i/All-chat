@@ -1,2 +1,23 @@
 @import "@all-chat/ui/globals.css";
 @source "../node_modules/streamdown/dist/*.js";
+
+/* Owner avatar: a glossy light streak that sweeps across the gold circle. */
+@keyframes owner-shine {
+  0% {
+    transform: translateX(-140%);
+  }
+
+  /* Shine completes in ~34% of 7.6s (≈2.6s) */
+  34% {
+    transform: translateX(240%);
+  }
+
+  /* Stay here for the remaining ~5s */
+  100% {
+    transform: translateX(240%);
+  }
+}
+
+.owner-shine {
+  animation: owner-shine 7.6s ease-in-out infinite;
+}

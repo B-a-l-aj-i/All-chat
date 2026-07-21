@@ -12,8 +12,10 @@ import {
 import { Field, FieldGroup } from "@all-chat/ui/components/field";
 import { Input } from "@all-chat/ui/components/input";
 import { Label } from "@all-chat/ui/components/label";
+import { USER_ID } from "../constant";
+import { CirclePlus } from "lucide-react";
 
-export default function CreateRoom() {
+export default function CreateRoom({ showIcon = false }) {
   const createRoom = useCreateRoom();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -26,6 +28,7 @@ export default function CreateRoom() {
       room_name: formData.get("room_name") as string,
       description: formData.get("description") as string,
       password: formData.get("password") as string,
+      owner_id: USER_ID,
     });
   };
 
@@ -33,9 +36,17 @@ export default function CreateRoom() {
     <Dialog>
       <DialogTrigger
         render={
-          <Button className="rounded-3xl p-4 cursor-pointer">
-            Create Room
-          </Button>
+          showIcon ? (
+            <CirclePlus
+              size={21}
+              className="text-[#777777] shrink-0 mr-[7.5px] cursor-pointer"
+              strokeWidth={1.5}
+            />
+          ) : (
+            <Button className="rounded-3xl p-4 cursor-pointer">
+              Create Room
+            </Button>
+          )
         }
       />
       <DialogContent className="sm:max-w-sm">

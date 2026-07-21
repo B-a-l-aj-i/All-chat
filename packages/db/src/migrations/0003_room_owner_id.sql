@@ -1,0 +1,1 @@
+ALTER TABLE `room` ADD `owner_id` text REFERENCES user(id);

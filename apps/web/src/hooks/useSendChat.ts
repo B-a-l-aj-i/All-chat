@@ -1,14 +1,14 @@
-import { createRoom } from "@/api/createRoom";
+import { sendChat } from "@/api/sendChat";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export function useCreateRoom() {
+export function useSendChat() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: createRoom,
-    onSuccess: () => {
+    mutationFn: sendChat,
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({
-        queryKey: ["my-rooms"],
+        queryKey: ["chats", variables.room_id],
       });
     },
   });

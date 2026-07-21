@@ -1,14 +1,13 @@
 import { API_URL } from "@/constant";
 
-export interface CreateRoomInput {
+export interface JoinRoomInput {
   room_name: string;
-  description: string;
   password: string;
-  owner_id: string;
+  user_id: string;
 }
 
-export async function createRoom(data: CreateRoomInput) {
-  const res = await fetch(`${API_URL}/create-room`, {
+export async function joinRoom(data: JoinRoomInput) {
+  const res = await fetch(`${API_URL}/join-room`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -19,7 +18,7 @@ export async function createRoom(data: CreateRoomInput) {
   const result = await res.json();
 
   if (!res.ok) {
-    throw new Error(result.message);
+    throw new Error(result.error ?? "Could not join room");
   }
 
   return result;

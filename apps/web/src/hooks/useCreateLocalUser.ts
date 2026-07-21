@@ -1,14 +1,14 @@
-import { createRoom } from "@/api/createRoom";
+import { getOrCreateUser } from "@/api/createUser";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export function useCreateRoom() {
+export function useCreateLocalUser() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: createRoom,
+    mutationFn: getOrCreateUser,
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["my-rooms"],
+        queryKey: ["rooms"],
       });
     },
   });

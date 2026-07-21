@@ -11,29 +11,47 @@ import {
 import { Field, FieldGroup } from "@all-chat/ui/components/field";
 import { Input } from "@all-chat/ui/components/input";
 import { Label } from "@all-chat/ui/components/label";
-import { socket } from "../lib/socket";
+import { useJoinRoom } from "@/hooks/useJoinRoom";
+import { USER_ID } from "@/constant";
+import { UserRoundKey } from "lucide-react";
 
 export default function JoinRoom({
   onJoined,
+  showIcon = false,
 }: {
+  showIcon: boolean;
   onJoined?: (roomId: string) => void;
 }) {
+  const joinRoom = useJoinRoom();
+
   const handleJoinRoom = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
-    const roomId = String(form.get("room_name"));
-    if (!roomId) return;
-    socket.emit("join-room", roomId);
-    onJoined?.(roomId);
+    const room_name = String(form.get("room_name"));
+    const password = String(form.get("password"));
+
+    joinRoom.mutate({
+      room_name,
+      password,
+      user_id: USER_ID,
+    });
   };
 
   return (
     <Dialog>
       <DialogTrigger
         render={
-          <Button variant="ghost" className="rounded-3xl p-4 cursor-pointer">
-            Join Room
-          </Button>
+          showIcon ? (
+            <UserRoundKey
+              size={21}
+              className="text-[#777777] shrink-0 mr-[7.5px] cursor-pointer"
+              strokeWidth={1.5}
+            />
+          ) : (
+            <Button variant="ghost" className="rounded-3xl p-4 cursor-pointer">
+              Join Room
+            </Button>
+          )
         }
       />
       <DialogContent className="sm:max-w-sm">

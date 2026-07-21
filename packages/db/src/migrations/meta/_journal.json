@@ -15,6 +15,34 @@
       "when": 1784051519524,
       "tag": "0001_room_table",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1784570054210,
+      "tag": "0002_user_anonymous_fields",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1784610744151,
+      "tag": "0003_room_owner_id",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1784630818099,
+      "tag": "0004_room_members_table",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1784657261200,
+      "tag": "0005_chats_table",
+      "breakpoints": true
     }
   ]
 }

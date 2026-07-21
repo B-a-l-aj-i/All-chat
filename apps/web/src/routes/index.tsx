@@ -1,10 +1,11 @@
-import { Button } from "@all-chat/ui/components/button";
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ChatRoom from "@/components/chat-room";
 import CreateRoom from "@/components/CreateRoom";
 import JoinRoom from "@/components/JoinRoom";
-import RoomChat from "@/components/RoomChat";
 import { socket } from "@/lib/socket";
+
+import { useCreateLocalUser } from "@/hooks/useCreateLocalUser";
 
 export const Route = createFileRoute("/")({
   component: HomeComponent,
@@ -12,32 +13,23 @@ export const Route = createFileRoute("/")({
 
 function HomeComponent() {
   const [roomId, setRoomId] = useState<string | null>(null);
+  const createLocalUser = useCreateLocalUser();
 
-  if (roomId) {
-    return (
-      <main className="relative flex h-full flex-col items-center bg-background px-6 py-10">
-        <div className="flex w-full max-w-2xl flex-1 flex-col gap-4">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xl font-semibold text-foreground">
-              Room: {roomId}
-            </h2>
-            <Button
-              variant="outline"
-              className="rounded-md cursor-pointer"
-              onClick={() => {
-                socket.emit("leave-room", roomId);
-                setRoomId(null);
-              }}
-            >
-              Leave
-            </Button>
-          </div>
-          {roomId}
-          <RoomChat roomId={roomId} />
-        </div>
-      </main>
-    );
-  }
+  // if (roomId) {
+  //   return (
+  //     <ChatRoom
+  //       roomId={roomId}
+  //       onLeave={() => {
+  //         socket.emit("leave-room", roomId);
+  //         setRoomId(null);
+  //       }}
+  //     />
+  //   );
+  // }
+
+  useEffect(() => {
+    createLocalUser.mutate();
+  }, []);
 
   return (
     <main className="relative flex h-full flex-col items-center overflow-hidden bg-background px-6">

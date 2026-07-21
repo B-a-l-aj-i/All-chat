@@ -20,6 +20,7 @@ import { app } from "./app";
 
 import "./user";
 import "./room";
+import "./chat";
 import { db } from "@all-chat/db";
 import { room } from "@all-chat/db/schema/room";
 import { eq } from "drizzle-orm";
@@ -62,34 +63,46 @@ const io = new Server(httpServer, {
 });
 
 io.on("connection", (socket) => {
-
-  console.log("sfsf",socket.id);
-  
-  // 1) join a room
-  socket.on("join-room", async (room_name) => {
+  // 1) join a room (keyed by room name so it matches what the client sends)
+  socket.on("join-room", async (room_id) => {
     const requestedRoom = await db
       .select()
       .from(room)
-      .where(eq(room.room_name, room_name));
+      .where(eq(room.id, room_id));
 
-    console.log(requestedRoom);
-    const roomId = requestedRoom?.[0]?.id;
-
-    console.log(roomId);
-    
-    if (!roomId) {
-      console.log("Adadasd");
-      
-      socket._error("room does not exist");
+    if (!requestedRoom?.[0]) {
+      socket.emit("room-error", "room does not exist");
+      return;
     }
 
-    socket.join(roomId);
-    console.log(`${socket.id} joined ${roomId}`);
+    socket.join(room_id);
+    socket.emit("joined-room", room_id);
+    console.log(`${socket.id} joined ${room_id}`);
   });
 
-  // 2) send text to everyone in that room
-  socket.on("message", ({ roomId, text }) => {
-    io.to(roomId).emit("message", text); // fan out to all members of roomId
+  // 1b) leave a room (client emits this when switching away / unmounting)
+  socket.on("leave-room", (room_id) => {
+    if (!room_id) return;
+    socket.leave(room_id);
+    console.log(`${socket.id} left ${room_id}`);
+  });
+
+  // 2) send text to the other members of that room
+  socket.on("message", ({ room_id, text }) => {
+    console.log("AdaidhFIOJFB");
+    console.log(room_id, text);
+
+    if (!room_id || !text) return;
+    // socket.to(...) excludes the sender; the sender adds its own message
+    // optimistically on the client, so this avoids a duplicate echo.
+    console.log(text);
+    // const a = socket.join(room_id);
+    // console.log(a);
+
+    socket.to(room_id).emit("message", {
+      text,
+      at: Date.now(),
+    });
   });
 });
 
