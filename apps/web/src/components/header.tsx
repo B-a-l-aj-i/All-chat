@@ -7,7 +7,7 @@ const NAV_LINKS = [
   { label: "Product", href: "#product" },
   { label: "Solution", href: "#solution" },
   { label: "Support", href: "#support" },
-  { label: "My Rooms", href: "#myRooms" },
+  { label: "My Rooms", href: "my-rooms" },
 ] as const;
 
 export default function Header() {

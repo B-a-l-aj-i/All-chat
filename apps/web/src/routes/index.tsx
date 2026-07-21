@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChatRoom from "@/components/ChatRoom";
 import CreateRoom from "@/components/CreateRoom";
 import JoinRoom from "@/components/JoinRoom";
 import { socket } from "@/lib/socket";
+
+import { useCreateLocalUser } from "@/hooks/useCreateLocalUser";
 
 export const Route = createFileRoute("/")({
   component: HomeComponent,
@@ -11,18 +13,23 @@ export const Route = createFileRoute("/")({
 
 function HomeComponent() {
   const [roomId, setRoomId] = useState<string | null>(null);
+  const createLocalUser = useCreateLocalUser();
 
-  if (roomId) {
-    return (
-      <ChatRoom
-        roomId={roomId}
-        onLeave={() => {
-          socket.emit("leave-room", roomId);
-          setRoomId(null);
-        }}
-      />
-    );
-  }
+  // if (roomId) {
+  //   return (
+  //     <ChatRoom
+  //       roomId={roomId}
+  //       onLeave={() => {
+  //         socket.emit("leave-room", roomId);
+  //         setRoomId(null);
+  //       }}
+  //     />
+  //   );
+  // }
+
+  useEffect(() => {
+    createLocalUser.mutate();
+  }, []);
 
   return (
     <main className="relative flex h-full flex-col items-center overflow-hidden bg-background px-6">
