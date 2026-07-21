@@ -3,6 +3,7 @@ import type { Room } from "@/api/getMyRooms";
 import { SidebarRoom } from "./SidebarRoom";
 import { FONT, bubbleShell } from "./constants";
 import CreateRoom from "../CreateRoom";
+import JoinRoom from "../JoinRoom";
 
 export function Sidebar({
   rooms,
@@ -26,7 +27,11 @@ export function Sidebar({
               Rooms
             </div>
 
-            <CreateRoom showIcon={true} />
+            <div className="flex gap-3">
+              <CreateRoom showIcon={true} />
+
+              <JoinRoom showIcon={true} />
+            </div>
           </div>
         </div>
         <div className="items-center flex py-[11.25px] px-[22.5px] relative">
