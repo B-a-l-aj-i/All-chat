@@ -6,7 +6,6 @@ import { roomMembers } from "@all-chat/db/schema/roomMembers";
 import { user } from "@all-chat/db/schema/user";
 import { and, asc, eq } from "drizzle-orm";
 import { getChatsHandler, sendChatHandler } from "./chatHandlers";
-import { sendChatLimiter } from "./limits";
 
 const accessDeps = {
   async findUser(userId: string) {
@@ -59,7 +58,6 @@ app.get(
 
 app.post(
   "/chats",
-  sendChatLimiter,
   sendChatHandler({
     ...accessDeps,
     async createChat(input) {

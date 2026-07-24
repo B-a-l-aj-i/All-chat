@@ -1,14 +1,4 @@
-import { devToolsMiddleware } from "@ai-sdk/devtools";
-import { google } from "@ai-sdk/google";
 import { env } from "@all-chat/env/server";
-import {
-  pipeUIMessageStreamToResponse,
-  streamText,
-  toUIMessageStream,
-  type UIMessage,
-  convertToModelMessages,
-  wrapLanguageModel,
-} from "ai";
 
 import { Server } from "socket.io";
 
@@ -25,33 +15,8 @@ import { roomMembers } from "@all-chat/db/schema/roomMembers";
 import { user } from "@all-chat/db/schema/user";
 import { and, eq } from "drizzle-orm";
 import { createSocketHandlers } from "./socketHandlers";
-import { createAiHandler } from "./aiHandlers";
-import { aiLimiter } from "./limits";
 
 const httpServer = createServer(app);
-
-app.post(
-  "/ai",
-  aiLimiter,
-  createAiHandler({
-    async stream(messages, res) {
-      const model = wrapLanguageModel({
-        model: google("gemini-2.5-flash"),
-        middleware: devToolsMiddleware(),
-      });
-      const result = streamText({
-        model,
-        messages: await convertToModelMessages(messages as UIMessage[]),
-      });
-      pipeUIMessageStreamToResponse({
-        response: res as unknown as Parameters<
-          typeof pipeUIMessageStreamToResponse
-        >[0]["response"],
-        stream: toUIMessageStream({ stream: result.stream }),
-      });
-    },
-  }),
-);
 
 app.get("/", (_req, res) => {
   res.status(200).send("OK");
