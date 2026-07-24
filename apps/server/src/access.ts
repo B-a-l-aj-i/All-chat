@@ -1,3 +1,7 @@
+import { db } from "@all-chat/db";
+import { room } from "@all-chat/db/schema/room";
+import { roomMembers } from "@all-chat/db/schema/roomMembers";
+import { user } from "@all-chat/db/schema/user";
 import { and, eq } from "drizzle-orm";
 import type { ParseResult } from "./http";
 
@@ -85,8 +89,6 @@ export async function requireRoomAccess(
 
 const defaultUserDeps: UserDeps = {
   async findUser(userId) {
-    const { db } = await import("@all-chat/db");
-    const { user } = await import("@all-chat/db/schema/user");
     const rows = await db
       .select({ id: user.id })
       .from(user)
@@ -99,8 +101,6 @@ const defaultUserDeps: UserDeps = {
 
 const defaultRoomAccessDeps: RoomAccessDeps = {
   async findRoom(roomId) {
-    const { db } = await import("@all-chat/db");
-    const { room } = await import("@all-chat/db/schema/room");
     const rows = await db
       .select({ id: room.id, owner_id: room.owner_id })
       .from(room)
@@ -110,8 +110,6 @@ const defaultRoomAccessDeps: RoomAccessDeps = {
     return rows[0] ?? null;
   },
   async findRoomMember(roomId, userId) {
-    const { db } = await import("@all-chat/db");
-    const { roomMembers } = await import("@all-chat/db/schema/roomMembers");
     const rows = await db
       .select({ room_id: roomMembers.room_id, user_id: roomMembers.user_id })
       .from(roomMembers)
