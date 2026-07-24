@@ -9,7 +9,7 @@ export type ParseResult<T> =
   | { ok: true; data: T }
   | { ok: false; status: number; error: ApiError };
 
-interface JsonResponse {
+export interface JsonResponse {
   status(code: number): JsonResponse;
   json(body: unknown): JsonResponse;
 }
