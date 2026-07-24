@@ -1,7 +1,7 @@
 import type { NextFunction, Request } from "express";
 import { sendError } from "./http";
 
-interface RateLimitResponse {
+export interface RateLimitResponse {
   status(code: number): RateLimitResponse;
   json(body: unknown): RateLimitResponse;
 }

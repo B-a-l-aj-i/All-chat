@@ -9,6 +9,7 @@ import {
   joinRoomHandler,
   myRoomsHandler,
 } from "./roomHandlers";
+import { joinRoomLimiter } from "./limits";
 
 app.get(
   "/my-rooms",
@@ -75,6 +76,7 @@ app.post(
 
 app.post(
   "/join-room",
+  joinRoomLimiter,
   joinRoomHandler({
     async findUser(userId) {
       const rows = await db

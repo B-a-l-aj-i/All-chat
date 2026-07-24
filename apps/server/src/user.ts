@@ -7,6 +7,7 @@ import {
   createUserHandler,
   disabledUsersHandler,
 } from "./userHandlers";
+import { createLocalUserLimiter } from "./limits";
 
 const nameGenerator = new AnonymousNames();
 
@@ -26,6 +27,7 @@ app.post(
 // first visit (when localStorage is empty) and stores the returned id.
 app.post(
   "/create-local-user",
+  createLocalUserLimiter,
   createLocalUserHandler({
     async createLocalUser() {
       const newUser = await db
