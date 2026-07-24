@@ -65,7 +65,7 @@ export default function ChatRoom({ onLeave }: { onLeave?: () => void }) {
   useEffect(() => {
     if (!selectedId) return;
 
-    socket.emit("join-room", selectedId);
+    socket.emit("join-room", { room_id: selectedId, user_id: USER_ID });
     const onMessage = () =>
       queryClient.invalidateQueries({ queryKey: ["chats", selectedId] });
     socket.on("message", onMessage);
@@ -88,7 +88,7 @@ export default function ChatRoom({ onLeave }: { onLeave?: () => void }) {
     // Persist (invalidates ["chats", roomId] on success so we see it), then
     // ping the room so other members refetch.
     sendChat.mutate({ room_id: selectedId, user_id: USER_ID, text });
-    socket.emit("message", { room_id: selectedId, text });
+    socket.emit("message", { room_id: selectedId, user_id: USER_ID, text });
     setDraft("");
   };
 

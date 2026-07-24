@@ -9,8 +9,6 @@ import {
   convertToModelMessages,
   wrapLanguageModel,
 } from "ai";
-import cors from "cors";
-import express from "express";
 
 import { Server } from "socket.io";
 
@@ -23,18 +21,12 @@ import "./room";
 import "./chat";
 import { db } from "@all-chat/db";
 import { room } from "@all-chat/db/schema/room";
-import { eq } from "drizzle-orm";
+import { roomMembers } from "@all-chat/db/schema/roomMembers";
+import { user } from "@all-chat/db/schema/user";
+import { and, eq } from "drizzle-orm";
+import { createSocketHandlers } from "./socketHandlers";
 
 const httpServer = createServer(app);
-
-app.use(
-  cors({
-    origin: env.CORS_ORIGIN,
-    methods: ["GET", "POST", "OPTIONS"],
-  }),
-);
-
-app.use(express.json());
 
 app.post("/ai", async (req, res) => {
   const { messages = [] } = (req.body || {}) as { messages: UIMessage[] };
@@ -59,51 +51,40 @@ app.get("/", (_req, res) => {
 // const app = express();
 
 const io = new Server(httpServer, {
-  cors: { origin: "*", methods: ["GET", "POST"] }, // loosen for local testing
+  cors: { origin: env.CORS_ORIGIN, methods: ["GET", "POST"] },
+});
+
+const socketHandlers = createSocketHandlers({
+  async findUser(userId) {
+    const rows = await db
+      .select({ id: user.id })
+      .from(user)
+      .where(eq(user.id, userId))
+      .limit(1);
+    return rows[0] ?? null;
+  },
+  async findRoom(roomId) {
+    const rows = await db
+      .select({ id: room.id, owner_id: room.owner_id })
+      .from(room)
+      .where(eq(room.id, roomId))
+      .limit(1);
+    return rows[0] ?? null;
+  },
+  async findRoomMember(roomId, userId) {
+    const rows = await db
+      .select({ room_id: roomMembers.room_id, user_id: roomMembers.user_id })
+      .from(roomMembers)
+      .where(and(eq(roomMembers.room_id, roomId), eq(roomMembers.user_id, userId)))
+      .limit(1);
+    return rows[0] ?? null;
+  },
 });
 
 io.on("connection", (socket) => {
-  // 1) join a room (keyed by room name so it matches what the client sends)
-  socket.on("join-room", async (room_id) => {
-    const requestedRoom = await db
-      .select()
-      .from(room)
-      .where(eq(room.id, room_id));
-
-    if (!requestedRoom?.[0]) {
-      socket.emit("room-error", "room does not exist");
-      return;
-    }
-
-    socket.join(room_id);
-    socket.emit("joined-room", room_id);
-    console.log(`${socket.id} joined ${room_id}`);
-  });
-
-  // 1b) leave a room (client emits this when switching away / unmounting)
-  socket.on("leave-room", (room_id) => {
-    if (!room_id) return;
-    socket.leave(room_id);
-    console.log(`${socket.id} left ${room_id}`);
-  });
-
-  // 2) send text to the other members of that room
-  socket.on("message", ({ room_id, text }) => {
-    console.log("AdaidhFIOJFB");
-    console.log(room_id, text);
-
-    if (!room_id || !text) return;
-    // socket.to(...) excludes the sender; the sender adds its own message
-    // optimistically on the client, so this avoids a duplicate echo.
-    console.log(text);
-    // const a = socket.join(room_id);
-    // console.log(a);
-
-    socket.to(room_id).emit("message", {
-      text,
-      at: Date.now(),
-    });
-  });
+  socket.on("join-room", (payload) => socketHandlers.joinRoom(socket, payload));
+  socket.on("leave-room", (roomId) => socketHandlers.leaveRoom(socket, roomId));
+  socket.on("message", (payload) => socketHandlers.message(socket, payload));
 });
 
 httpServer.listen(8000, () => {
