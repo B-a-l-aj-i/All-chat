@@ -1,61 +1,68 @@
 import { app } from "./app";
-import { type Request, type Response } from "express";
-
 import { db } from "@all-chat/db";
 import { chats } from "@all-chat/db/schema/chats";
+import { room } from "@all-chat/db/schema/room";
+import { roomMembers } from "@all-chat/db/schema/roomMembers";
 import { user } from "@all-chat/db/schema/user";
-import { asc, eq } from "drizzle-orm";
+import { and, asc, eq } from "drizzle-orm";
+import { getChatsHandler, sendChatHandler } from "./chatHandlers";
 
-// Read every message in a room, oldest first. Joins the sender's username so
-// the client can label + color-code messages per user.
-app.get("/chats", async (req: Request, res: Response) => {
-  const roomId = req.query.room_id as string | undefined;
+const accessDeps = {
+  async findUser(userId: string) {
+    const rows = await db
+      .select({ id: user.id })
+      .from(user)
+      .where(eq(user.id, userId))
+      .limit(1);
+    return rows[0] ?? null;
+  },
+  async findRoom(roomId: string) {
+    const rows = await db
+      .select({ id: room.id, owner_id: room.owner_id })
+      .from(room)
+      .where(eq(room.id, roomId))
+      .limit(1);
+    return rows[0] ?? null;
+  },
+  async findRoomMember(roomId: string, userId: string) {
+    const rows = await db
+      .select({ room_id: roomMembers.room_id, user_id: roomMembers.user_id })
+      .from(roomMembers)
+      .where(and(eq(roomMembers.room_id, roomId), eq(roomMembers.user_id, userId)))
+      .limit(1);
+    return rows[0] ?? null;
+  },
+};
 
-  if (!roomId) {
-    return res.status(400).json({ error: "room_id is required" });
-  }
+app.get(
+  "/chats",
+  getChatsHandler({
+    ...accessDeps,
+    async listChats(roomId) {
+      return db
+        .select({
+          id: chats.id,
+          room_id: chats.room_id,
+          user_id: chats.user_id,
+          username: user.username,
+          text: chats.text,
+          created_at: chats.created_at,
+        })
+        .from(chats)
+        .innerJoin(user, eq(user.id, chats.user_id))
+        .where(eq(chats.room_id, roomId))
+        .orderBy(asc(chats.created_at));
+    },
+  }),
+);
 
-  try {
-    const messages = await db
-      .select({
-        id: chats.id,
-        room_id: chats.room_id,
-        user_id: chats.user_id,
-        username: user.username,
-        text: chats.text,
-        created_at: chats.created_at,
-      })
-      .from(chats)
-      .innerJoin(user, eq(user.id, chats.user_id))
-      .where(eq(chats.room_id, roomId))
-      .orderBy(asc(chats.created_at));
-
-    res.json(messages);
-  } catch (error) {
-    res.status(500).json({ error: "Database fetch failed" });
-  }
-});
-
-// Write a text message to a room.
-app.post("/chats", async (req: Request, res: Response) => {
-  const { room_id, user_id, text } = req.body;
-
-  if (!room_id || !user_id || !text) {
-    return res
-      .status(400)
-      .json({ error: "room_id, user_id and text are required" });
-  }
-
-  try {
-    const inserted = await db
-      .insert(chats)
-      .values({ room_id, user_id, text })
-      .returning();
-
-    res.status(201).json(inserted[0]);
-  } catch (error) {
-    console.log(error);
-
-    res.status(400).json({ error: "Could not save message" });
-  }
-});
+app.post(
+  "/chats",
+  sendChatHandler({
+    ...accessDeps,
+    async createChat(input) {
+      const rows = await db.insert(chats).values(input).returning();
+      return rows[0]!;
+    },
+  }),
+);

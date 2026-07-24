@@ -9,9 +9,9 @@ export interface Chat {
   created_at: string;
 }
 
-export async function getChats(roomId: string): Promise<Chat[]> {
+export async function getChats(roomId: string, userId: string): Promise<Chat[]> {
   const res = await fetch(
-    `${API_URL}/chats?room_id=${encodeURIComponent(roomId)}`,
+    `${API_URL}/chats?room_id=${encodeURIComponent(roomId)}&user_id=${encodeURIComponent(userId)}`,
   );
   const result = await res.json();
 
